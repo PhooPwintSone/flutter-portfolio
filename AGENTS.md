@@ -53,11 +53,13 @@ The **only** image assets are the logo derivatives, all generated from `logo.jpg
 
 `logo.jpg` is an opaque **photo on a white background**, not a transparent logo — the art only fills
 88% of the frame and the corners are pure white. The derivatives are therefore cropped to the
-content bounding box, and the two PNGs get a `#0B1020` plate behind the art so they stay visible on
-light browser chrome. Regenerate with the crop script rather than hand-scaling: a plain
-`DrawImage` to the full 2048 frame paints over the plate and yields a white square. If `logo.jpg` is
-ever replaced, all three derivatives must be regenerated together or the tab icon and nav mark
-disagree.
+content bounding box, and both PNGs are generated on a **fully transparent** margin
+(`$g.Clear(Color.FromArgb(0,0,0,0))`) with a small pad. There is deliberately **no coloured plate**
+behind the art: a dark plate shows up in the browser tab as an unwanted frame, and a white one is
+indistinguishable from the art's own white background. Regenerate with the crop script rather than
+hand-scaling — a plain `DrawImage` to the full 2048 frame paints over whatever margin was requested
+and yields a full-bleed white square. If `logo.jpg` is ever replaced, all three derivatives must be
+regenerated together or the tab icon and nav mark disagree.
 
 The `.marquee-track` scrolls with `translateX(-50%)`, so its two halves must stay **byte-identical**
 or the loop visibly jumps. Same for the `.year` span, which is now unused (no project carries one)
