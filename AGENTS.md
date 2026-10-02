@@ -22,11 +22,19 @@ Local storage goes through the `store` helper in §3 — never call `localStorag
 IIFE, a throw there aborts every later section and leaves all 35 `.reveal` elements stuck at
 `opacity: 0`, i.e. a blank page below the nav.
 
-Vercel Analytics is **not currently wired up**. The build-free `<script defer src="/_vercel/insights/script.js">`
-snippet was tried in `<head>` and then removed, because `/_vercel/…` is served only by Vercel's edge
-and 404s everywhere else — including locally, which just adds a console error. `@vercel/analytics`
-is the npm alternative but is ESM and would require a bundler this repo deliberately lacks. Add the
-script tag back only when the site is actually deployed on Vercel.
+Vercel Analytics is injected by a small inline block at the end of `<head>`, guarded on
+`location.hostname`. It has to be injected rather than written as a static `<script src>`, because
+`/_vercel/insights/script.js` is served only by Vercel's edge: as a static tag it 404s on every
+other host and in local dev, and that 404 was once mistaken for the cause of the blank-page bug.
+The guard keeps local dev clean. It will still 404 if the site is deployed somewhere other than
+Vercel — delete the block in that case. `@vercel/analytics` is the npm alternative but is ESM and
+would require a bundler this repo deliberately lacks.
+
+`test-chip-drag.js` is a headless integration test for the hero chips: it slices §12 straight out of
+`script.js` and runs it against a DOM stub, so it exercises the shipped code rather than a copy.
+Run it with `node test-chip-drag.js` after touching the drag code. It asserts the 4px arm threshold,
+four-way movement, leash cap, viewport clamp, spring-back-to-zero and `is-dragging` cleanup.
+There is otherwise no test setup in this repo — do not add a runner for it.
 
 ## Run it
 
@@ -55,32 +63,36 @@ templating, no JSON — content *is* the markup.
 New non-active filter buttons must ship with `aria-selected="false"` (the script only toggles it
 after the first click).
 
-Project thumbnails are **CSS gradients on `.t-1`…`.t-6` plus an emoji glyph** — no image files are
-involved. Only `.t-1`–`.t-3` are currently used (three projects); adding a card that reuses `.t-4`…`.t-6`
-is fine, but a card with no `.t-N` class renders an unstyled blank thumbnail.
+Project thumbnails are **CSS gradients on `.t-1`…`.t-3` plus an emoji glyph** — no image files are
+involved. There are only three projects, so `.t-4`…`.t-6` and the `.year` span rule were deleted as
+dead. A card with no `.t-N` class renders an unstyled blank thumbnail, so a fourth project needs a
+new gradient (and its `.year` back).
 
-The **only** image assets are the logo derivatives, all generated from `logo.jpg`:
+The **only** image assets are logo derivatives, all generated from `logo.jpg`:
 
 | File | Size | Used by |
 | --- | --- | --- |
-| `logo.jpg` | 2048×2048, ~1.05 MB | Source only — **never referenced by the markup**, too heavy to ship |
+| `logo.jpg` | 2048×2048, ~1 MB | Source only — **never referenced**, too heavy to ship |
 | `logo-128.jpg` | 128×128, ~6 KB | The `.brand-mark` `<img>` in the nav (displayed at 38×38) |
-| `favicon-32.png` | 32×32, ~1.5 KB | `<link rel="icon">` |
-| `apple-touch-icon.png` | 180×180, ~19 KB | `<link rel="apple-touch-icon">` |
+| `logo-alpha-64.png` | 64×64, ~5 KB | Base64-embedded **inside `favicon.svg`** |
+| `favicon.svg` | ~7.5 KB | `<link rel="icon" type="image/svg+xml">` — primary |
+| `favicon-32.png` | 32×32, ~1.5 KB | PNG fallback for browsers without SVG favicons |
+| `apple-touch-icon.png` | 180×180, ~23 KB | `<link rel="apple-touch-icon">` |
 
-`logo.jpg` is an opaque **photo on a white background**, not a transparent logo — the art only fills
-88% of the frame and the corners are pure white. The derivatives are therefore cropped to the
-content bounding box, and both PNGs are generated on a **fully transparent** margin
-(`$g.Clear(Color.FromArgb(0,0,0,0))`) with a small pad. There is deliberately **no coloured plate**
-behind the art: a dark plate shows up in the browser tab as an unwanted frame, and a white one is
-indistinguishable from the art's own white background. Regenerate with the crop script rather than
-hand-scaling — a plain `DrawImage` to the full 2048 frame paints over whatever margin was requested
-and yields a full-bleed white square. If `logo.jpg` is ever replaced, all three derivatives must be
-regenerated together or the tab icon and nav mark disagree.
+`logo.jpg` is an opaque **photo on a white background**, not a transparent logo — the art fills 88%
+of the frame and the corners are pure white. That is why the tab icon needed a plate: white art on
+a light tab strip is invisible. `favicon.svg` is self-contained (data-URI image, no external
+reference, as SVG-as-image forbids them) and switches the plate with `prefers-color-scheme` —
+`#0b1020` by default and under a **light** scheme so the logo is framed and legible, `fill: none`
+under a **dark** scheme so there is no visible frame on a dark tab. The raster fallbacks cannot react
+to a media query, so `favicon-32.png` and `apple-touch-icon.png` bake the dark plate in permanently.
+Regenerate all four derivatives together whenever `logo.jpg` changes, or the tab icon and nav mark
+drift apart.
 
 The `.marquee-track` scrolls with `translateX(-50%)`, so its two halves must stay **byte-identical**
-or the loop visibly jumps. Same for the `.year` span, which is now unused (no project carries one)
-but whose CSS rule is still in `styles.css`.
+or the loop visibly jumps. It now cycles 12 technologies (matching the skill cards), so
+`animation: slide` was doubled from `28s` to `56s` to hold the old scroll speed — halving it again
+whenever the item count changes.
 
 ## script.js fragility
 

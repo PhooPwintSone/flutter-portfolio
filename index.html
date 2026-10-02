@@ -18,6 +18,9 @@
       content="I build user-centric, cross-platform apps with Flutter — pixel-perfect UI, robust state management and API integrations."
     />
 
+    <!-- SVG first: it reacts to prefers-color-scheme. The PNG is the fallback for
+         browsers without SVG favicon support, so its dark plate is baked in. -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
@@ -29,6 +32,20 @@
     />
 
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- Vercel Web Analytics. `/_vercel/insights/script.js` is served only by Vercel's
+         edge, so loading it unconditionally produces a 404 on every other host and in
+         local dev — which reads like a broken page but is harmless. Gate it on the
+         hostname so local dev stays clean. Delete this block if you deploy somewhere
+         other than Vercel. -->
+    <script>
+      if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) {
+        var s = document.createElement('script');
+        s.defer = true;
+        s.src = '/_vercel/insights/script.js';
+        document.head.appendChild(s);
+      }
+    </script>
   </head>
   <body>
     <div class="bg-blobs" aria-hidden="true">
@@ -129,7 +146,7 @@
 
             <h1 class="reveal" data-delay="1">
               Hi, I'm <span class="grad-text">Phoo Pwint Sone</span><br />
-              I build apps with <span class="grad-text">flutter</span>
+              I build apps with <span class="grad-text">Flutter</span>
             </h1>
 
             <p class="hero-typed reveal" data-delay="2">
@@ -260,19 +277,24 @@
       </section>
 
       <!-- ============ STATS ============ -->
+      <!-- EDIT ME — the four `data-count` values below are the ONLY place these numbers
+           live. Each value is the number the §6 counter animates up to; the text inside
+           the <b> is only the no-JS fallback and gets overwritten on scroll-in, so change
+           the attribute and the text together. Drop `data-suffix` entirely if the stat
+           has no unit. Remove a whole <div class="stat"> to show fewer than four. -->
       <section class="stats">
         <div class="container stats-grid">
           <div class="stat reveal">
-            <b data-count="2">0</b><span>+ Years experience</span>
+            <b data-count="2">2</b><span>+ Years experience</span>
           </div>
           <div class="stat reveal" data-delay="1">
-            <b data-count="8">0</b><span>Apps shipped</span>
+            <b data-count="8">8</b><span>Apps shipped</span>
           </div>
           <div class="stat reveal" data-delay="2">
-            <b data-count="100" data-suffix="%">0</b><span>Test coverage</span>
+            <b data-count="100" data-suffix="%">100%</b><span>Test coverage</span>
           </div>
           <div class="stat reveal" data-delay="3">
-            <b data-count="5">0</b><span>Open-source PRs</span>
+            <b data-count="5">5</b><span>Open-source PRs</span>
           </div>
         </div>
       </section>
@@ -332,7 +354,7 @@
   <span class="c-k">final</span> List&lt;<span class="c-t">String</span>> skills = [
     <span class="c-s">'Flutter'</span>, <span class="c-s">'Dart'</span>, <span class="c-s">'BLoC'</span>,
     <span class="c-s">'Provider'</span>, <span class="c-s">'Supabase'</span>, <span class="c-s">'Hive'</span>,
-    <span class="c-s">'SQLite'</span>,
+    <span class="c-s">'SQLite'</span>, <span class="c-s">'SharedPreferences'</span>,
   ];
 
   <span class="c-m">// Build once. Ship everywhere.</span>
@@ -437,11 +459,17 @@
           <div class="marquee reveal" aria-hidden="true">
             <div class="marquee-track">
               <span>Flutter</span><i>◆</i><span>Dart</span><i>◆</i
-              ><span>BLoC</span><i>◆</i> <span>Provider</span><i>◆</i
-              ><span>Supabase</span><i>◆</i><span>Hive</span><i>◆</i>
+              ><span>BLoC</span><i>◆</i><span>Cubit</span><i>◆</i
+              ><span>Provider</span><i>◆</i><span>Supabase</span><i>◆</i
+              ><span>Firebase</span><i>◆</i><span>Hive</span><i>◆</i
+              ><span>SQLite</span><i>◆</i><span>SharedPreferences</span><i>◆</i
+              ><span>Material 3</span><i>◆</i><span>REST APIs</span><i>◆</i>
               <span>Flutter</span><i>◆</i><span>Dart</span><i>◆</i
-              ><span>BLoC</span><i>◆</i> <span>Provider</span><i>◆</i
-              ><span>Supabase</span><i>◆</i><span>Hive</span><i>◆</i>
+              ><span>BLoC</span><i>◆</i><span>Cubit</span><i>◆</i
+              ><span>Provider</span><i>◆</i><span>Supabase</span><i>◆</i
+              ><span>Firebase</span><i>◆</i><span>Hive</span><i>◆</i
+              ><span>SQLite</span><i>◆</i><span>SharedPreferences</span><i>◆</i
+              ><span>Material 3</span><i>◆</i><span>REST APIs</span><i>◆</i>
             </div>
           </div>
         </div>
