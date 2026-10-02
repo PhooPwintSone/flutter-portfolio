@@ -340,4 +340,31 @@
   onScrollNav();
   spy();
   window.addEventListener('scroll', () => { onScrollNav(); spy(); }, { passive: true });
+
+  /* ---------- 14. Time-aware greeting ---------- */
+  /* The phone mockup's kicker greets the visitor using their own clock, so it tracks
+     whoever is looking at the page rather than a fixed string baked into the markup.
+     Buckets are hours in the visitor's local timezone; `#greeting` falls back to a
+     sensible static value if this never runs (no JS, or the element is renamed). */
+  const greeting = $('#greeting');
+  if (greeting) {
+    const hourNow = () => new Date().getHours();
+    const phraseFor = (h) => {
+      if (h < 5)  return 'Good night';
+      if (h < 12) return 'Good morning';
+      if (h < 17) return 'Good afternoon';
+      if (h < 22) return 'Good evening';
+      return 'Good night';
+    };
+
+    let last = phraseFor(hourNow());
+    greeting.textContent = last;
+
+    /* Re-check on a timer so a page left open across a boundary (11:59 -> 12:00)
+       updates itself. Writes only when the phrase actually changes. */
+    setInterval(() => {
+      const next = phraseFor(hourNow());
+      if (next !== last) { last = next; greeting.textContent = next; }
+    }, 60000);
+  }
 })();
