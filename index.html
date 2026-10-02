@@ -1,201 +1,334 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="dark">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Phoo Pwint Sone — Flutter Developer</title>
-<meta name="description" content="Portfolio of Phoo Pwint Sone, a Flutter developer building user-centric, cross-platform apps for iOS, Android, web and desktop." />
-<meta name="author" content="Phoo Pwint Sone" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Phoo Pwint Sone — Flutter Developer</title>
+    <meta
+      name="description"
+      content="Portfolio of Phoo Pwint Sone, a Flutter developer building user-centric, cross-platform apps for iOS, Android, web and desktop."
+    />
+    <meta name="author" content="Phoo Pwint Sone" />
 
-<!-- Open Graph -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Phoo Pwint Sone — Flutter Developer" />
-<meta property="og:description" content="I build user-centric, cross-platform apps with Flutter — pixel-perfect UI, robust state management and API integrations." />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Phoo Pwint Sone — Flutter Developer" />
+    <meta
+      property="og:description"
+      content="I build user-centric, cross-platform apps with Flutter — pixel-perfect UI, robust state management and API integrations."
+    />
 
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
 
-<link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-blobs" aria-hidden="true">
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+      <span class="blob blob-3"></span>
+    </div>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
-<!-- Vercel Web Analytics. Build-free: `defer` keeps it off the critical path.
-     This path only resolves on a Vercel deployment; other hosts will 404 it. -->
-<script defer src="/_vercel/insights/script.js"></script>
-</head>
-<body>
-<div class="bg-blobs" aria-hidden="true">
-  <span class="blob blob-1"></span>
-  <span class="blob blob-2"></span>
-  <span class="blob blob-3"></span>
-</div>
-<div class="bg-grid" aria-hidden="true"></div>
-<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+    <a class="skip-link" href="#home">Skip to content</a>
 
-<a class="skip-link" href="#home">Skip to content</a>
-
-<!-- ============ NAV ============ -->
-<header class="nav" id="nav">
-  <div class="container nav-inner">
-    <a href="#home" class="brand">
-      <span class="brand-mark" aria-hidden="true">
-        <img src="logo-128.jpg" alt="" width="38" height="38" decoding="async" />
-      </span>
-      <span class="brand-text">phoopwintsone<span class="dot">.</span>dev</span>
-    </a>
-
-    <nav class="nav-links" id="navLinks" aria-label="Primary">
-      <a href="#about" class="nav-link">About</a>
-      <a href="#skills" class="nav-link">Skills</a>
-      <a href="#projects" class="nav-link">Projects</a>
-      <a href="#experience" class="nav-link">Experience</a>
-      <a href="#contact" class="nav-link">Contact</a>
-      <div class="nav-actions">
-        <button class="icon-btn" id="themeToggle" aria-label="Toggle colour theme" title="Toggle theme">
-          <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-          <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-        </button>
-        <a href="#contact" class="btn btn-sm btn-primary">Hire me</a>
-      </div>
-    </nav>
-
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
-
-<main>
-<!-- ============ HERO ============ -->
-<section class="hero section" id="home">
-  <div class="container hero-grid">
-    <div class="hero-copy">
-      <p class="badge reveal"><span class="pulse"></span> Available for freelance &amp; full-time</p>
-
-      <h1 class="reveal" data-delay="1">
-        Hi, I'm <span class="grad-text">Phoo Pwint Sone</span><br />
-        I build apps with <span class="grad-text">flutter</span>
-      </h1>
-
-      <p class="hero-typed reveal" data-delay="2">
-        <span class="type-prefix">//</span>
-        <span id="typed"></span><span class="caret"></span>
-      </p>
-
-      <p class="hero-desc reveal" data-delay="3">
-        Dedicated Junior Flutter Developer focused on building user-centric, cross-platform
-        applications. From pixel-perfect UI implementation to robust state management
-        (BLoC, Provider) and API integrations, I build functional and seamless digital
-        solutions.
-      </p>
-
-      <div class="hero-cta reveal" data-delay="4">
-        <a href="#projects" class="btn btn-primary">
-          View my work
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    <!-- ============ NAV ============ -->
+    <header class="nav" id="nav">
+      <div class="container nav-inner">
+        <a href="#home" class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <img
+              src="logo-128.jpg"
+              alt=""
+              width="38"
+              height="38"
+              decoding="async"
+            />
+          </span>
+          <span class="brand-text"
+            >phoopwintsone<span class="dot">.</span>dev</span
+          >
         </a>
-        <a href="#contact" class="btn btn-ghost">Get in touch</a>
-      </div>
 
-      <ul class="social-row reveal" data-delay="5">
-        <li><a href="https://github.com/PhooPwintSone" target="_blank" rel="noopener" aria-label="GitHub">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.07.78 2.16v3.2c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
-        </a></li>
-        <li><a href="https://www.linkedin.com/in/phoopwintsone" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.76-1.95 4.02 0 4.76 2.5 4.76 5.76V21h-4v-5.7c0-1.36-.03-3.1-1.95-3.1-1.95 0-2.25 1.48-2.25 3v5.8H9z"/></svg>
-        </a></li>
-      </ul>
-    </div>
-
-    <!-- Phone mockup -->
-    <div class="hero-visual reveal" data-delay="3">
-      <div class="phone">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="app-bar">
-            <div class="app-avatar"></div>
-            <div class="app-lines"><i></i><i></i></div>
-            <div class="app-bell">🔔</div>
+        <nav class="nav-links" id="navLinks" aria-label="Primary">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#experience" class="nav-link">Experience</a>
+          <a href="#contact" class="nav-link">Contact</a>
+          <div class="nav-actions">
+            <button
+              class="icon-btn"
+              id="themeToggle"
+              aria-label="Toggle colour theme"
+              title="Toggle theme"
+            >
+              <svg
+                class="icon-sun"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              >
+                <circle cx="12" cy="12" r="4" />
+                <path
+                  d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+                />
+              </svg>
+              <svg
+                class="icon-moon"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+              </svg>
+            </button>
+            <a href="#contact" class="btn btn-sm btn-primary">Hire me</a>
           </div>
-          <div class="app-hero">
-            <p class="app-kicker">Good morning</p>
-            <p class="app-title">Phoo Pwint Sone</p>
-            <div class="app-chart">
-              <span style="height:38%"></span><span style="height:62%"></span>
-              <span style="height:48%"></span><span style="height:82%"></span>
-              <span style="height:56%"></span><span style="height:96%"></span>
-              <span style="height:70%"></span>
+        </nav>
+
+        <button
+          class="menu-btn"
+          id="menuBtn"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="navLinks"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============ HERO ============ -->
+      <section class="hero section" id="home">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="badge reveal">
+              <span class="pulse"></span> Available for freelance &amp;
+              full-time
+            </p>
+
+            <h1 class="reveal" data-delay="1">
+              Hi, I'm <span class="grad-text">Phoo Pwint Sone</span><br />
+              I build apps with <span class="grad-text">flutter</span>
+            </h1>
+
+            <p class="hero-typed reveal" data-delay="2">
+              <span class="type-prefix">//</span>
+              <span id="typed"></span><span class="caret"></span>
+            </p>
+
+            <p class="hero-desc reveal" data-delay="3">
+              Dedicated Junior Flutter Developer focused on building
+              user-centric, cross-platform applications. From pixel-perfect UI
+              implementation to robust state management (BLoC, Provider) and API
+              integrations, I build functional and seamless digital solutions.
+            </p>
+
+            <div class="hero-cta reveal" data-delay="4">
+              <a href="#projects" class="btn btn-primary">
+                View my work
+                <svg
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+              <a href="#contact" class="btn btn-ghost">Get in touch</a>
             </div>
+
+            <ul class="social-row reveal" data-delay="5">
+              <li>
+                <a
+                  href="https://github.com/PhooPwintSone"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="GitHub"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.07.78 2.16v3.2c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/phoopwintsone"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="LinkedIn"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.76-1.95 4.02 0 4.76 2.5 4.76 5.76V21h-4v-5.7c0-1.36-.03-3.1-1.95-3.1-1.95 0-2.25 1.48-2.25 3v5.8H9z"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
           </div>
-          <div class="app-cards">
-            <div class="app-card"><span class="dotc c1"></span><div><i></i><i></i></div></div>
-            <div class="app-card"><span class="dotc c2"></span><div><i></i><i></i></div></div>
-            <div class="app-card"><span class="dotc c3"></span><div><i></i><i></i></div></div>
-          </div>
-          <div class="app-nav">
-            <span class="on"></span><span></span><span></span><span></span>
+
+          <!-- Phone mockup -->
+          <div class="hero-visual reveal" data-delay="3">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                <div class="app-bar">
+                  <div class="app-avatar"></div>
+                  <div class="app-lines"><i></i><i></i></div>
+                  <div class="app-bell">🔔</div>
+                </div>
+                <div class="app-hero">
+                  <p class="app-kicker">Good morning</p>
+                  <p class="app-title">Phoo Pwint Sone</p>
+                  <div class="app-chart">
+                    <span style="height: 38%"></span
+                    ><span style="height: 62%"></span>
+                    <span style="height: 48%"></span
+                    ><span style="height: 82%"></span>
+                    <span style="height: 56%"></span
+                    ><span style="height: 96%"></span>
+                    <span style="height: 70%"></span>
+                  </div>
+                </div>
+                <div class="app-cards">
+                  <div class="app-card">
+                    <span class="dotc c1"></span>
+                    <div><i></i><i></i></div>
+                  </div>
+                  <div class="app-card">
+                    <span class="dotc c2"></span>
+                    <div><i></i><i></i></div>
+                  </div>
+                  <div class="app-card">
+                    <span class="dotc c3"></span>
+                    <div><i></i><i></i></div>
+                  </div>
+                </div>
+                <div class="app-nav">
+                  <span class="on"></span><span></span><span></span
+                  ><span></span>
+                </div>
+              </div>
+            </div>
+            <div class="float-chip chip-1"><b>60</b> fps</div>
+            <div class="float-chip chip-2"><b>0</b> jank</div>
+            <div class="float-chip chip-3">Flutter 3.x</div>
           </div>
         </div>
-      </div>
-      <div class="float-chip chip-1"><b>60</b> fps</div>
-      <div class="float-chip chip-2"><b>0</b> jank</div>
-      <div class="float-chip chip-3">Flutter 3.x</div>
-    </div>
-  </div>
 
-  <a href="#about" class="scroll-hint" aria-label="Scroll to about"><span></span></a>
-</section>
+        <a href="#about" class="scroll-hint" aria-label="Scroll to about"
+          ><span></span
+        ></a>
+      </section>
 
-<!-- ============ STATS ============ -->
-<section class="stats">
-  <div class="container stats-grid">
-    <div class="stat reveal"><b data-count="2">0</b><span>+ Years experience</span></div>
-    <div class="stat reveal" data-delay="1"><b data-count="8">0</b><span>Apps shipped</span></div>
-    <div class="stat reveal" data-delay="2"><b data-count="100" data-suffix="%">0</b><span>Test coverage</span></div>
-    <div class="stat reveal" data-delay="3"><b data-count="5">0</b><span>Open-source PRs</span></div>
-  </div>
-</section>
-
-<!-- ============ ABOUT ============ -->
-<section class="section" id="about">
-  <div class="container">
-    <div class="sec-head reveal">
-      <p class="sec-label">01 — About</p>
-      <h2>A developer who cares about <span class="grad-text">the details</span></h2>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <p>
-          I discovered my passion for mobile development through translating creative
-          <strong>UI/UX designs</strong> into functional, interactive applications.
-        </p>
-        <p>
-          Currently working as a <strong>Junior Mobile Developer</strong> at Digital Base in
-          Yangon, I specialize in building responsive, cross-platform apps using
-          <strong>Flutter and Dart</strong>.
-        </p>
-        <p>
-          I am highly focused on <strong>clean state management architecture</strong> and
-          <strong>seamless backend integrations</strong> to create smooth, user-centric
-          experiences.
-        </p>
-
-        <div class="about-meta">
-          <div><span>Location</span><b>Yangon, Myanmar (GMT+6:30)</b></div>
-          <div><span>Languages</span><b>Burmese (Native), English, Chinese (Conversational)</b></div>
-          <div><span>Status</span><b>Full-Time at Digital Base</b></div>
+      <!-- ============ STATS ============ -->
+      <section class="stats">
+        <div class="container stats-grid">
+          <div class="stat reveal">
+            <b data-count="2">0</b><span>+ Years experience</span>
+          </div>
+          <div class="stat reveal" data-delay="1">
+            <b data-count="8">0</b><span>Apps shipped</span>
+          </div>
+          <div class="stat reveal" data-delay="2">
+            <b data-count="100" data-suffix="%">0</b><span>Test coverage</span>
+          </div>
+          <div class="stat reveal" data-delay="3">
+            <b data-count="5">0</b><span>Open-source PRs</span>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="code-card reveal" data-delay="2">
-        <div class="code-head">
-          <span class="tl"><i class="r"></i><i class="y"></i><i class="g"></i></span>
-          <span class="code-file">developer.dart</span>
-        </div>
-<pre><code><span class="c-k">class</span> <span class="c-c">FlutterDev</span> <span class="c-k">extends</span> <span class="c-t">Human</span> {
+      <!-- ============ ABOUT ============ -->
+      <section class="section" id="about">
+        <div class="container">
+          <div class="sec-head reveal">
+            <p class="sec-label">01 — About</p>
+            <h2>
+              A developer who cares about
+              <span class="grad-text">the details</span>
+            </h2>
+          </div>
+
+          <div class="about-grid">
+            <div class="about-text reveal">
+              <p>
+                I discovered my passion for mobile development through
+                translating creative
+                <strong>UI/UX designs</strong> into functional, interactive
+                applications.
+              </p>
+              <p>
+                Currently working as a
+                <strong>Junior Mobile Developer</strong> at Digital Base in
+                Yangon, I specialize in building responsive, cross-platform apps
+                using <strong>Flutter and Dart</strong>.
+              </p>
+              <p>
+                I am highly focused on
+                <strong>clean state management architecture</strong> and
+                <strong>seamless backend integrations</strong> to create smooth,
+                user-centric experiences.
+              </p>
+
+              <div class="about-meta">
+                <div>
+                  <span>Location</span><b>Yangon, Myanmar (GMT+6:30)</b>
+                </div>
+                <div>
+                  <span>Languages</span
+                  ><b>Burmese (Native), English, Chinese (Conversational)</b>
+                </div>
+                <div><span>Status</span><b>Full-Time at Digital Base</b></div>
+              </div>
+            </div>
+
+            <div class="code-card reveal" data-delay="2">
+              <div class="code-head">
+                <span class="tl"
+                  ><i class="r"></i><i class="y"></i><i class="g"></i
+                ></span>
+                <span class="code-file">developer.dart</span>
+              </div>
+              <pre><code><span class="c-k">class</span> <span class="c-c">FlutterDev</span> <span class="c-k">extends</span> <span class="c-t">Human</span> {
   <span class="c-k">final</span> List&lt;<span class="c-t">String</span>> skills = [
     <span class="c-s">'Flutter'</span>, <span class="c-s">'Dart'</span>, <span class="c-s">'BLoC'</span>,
     <span class="c-s">'Provider'</span>, <span class="c-s">'Supabase'</span>, <span class="c-s">'Hive'</span>,
@@ -208,241 +341,465 @@
     coffee();
   }
 }</code></pre>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SKILLS ============ -->
-<section class="section" id="skills">
-  <div class="container">
-    <div class="sec-head reveal">
-      <p class="sec-label">02 — Skills</p>
-      <h2>My <span class="grad-text">toolbox</span></h2>
-    </div>
-
-    <div class="skills-grid">
-      <article class="skill-card reveal">
-        <h3><span class="ico">📱</span> Flutter &amp; Dart</h3>
-        <div class="meter" data-level="85"><span class="meter-fill"></span><b>85%</b></div>
-        <ul class="chips"><li>Flutter</li><li>Dart</li><li>Cross-platform</li><li>Material 3</li><li>Animations</li></ul>
-      </article>
-
-      <article class="skill-card reveal" data-delay="1">
-        <h3><span class="ico">🎨</span> UI/UX Implementation</h3>
-        <div class="meter" data-level="90"><span class="meter-fill"></span><b>90%</b></div>
-        <ul class="chips"><li>Figma to app</li><li>Pixel-perfect</li><li>Responsive</li><li>Design handoff</li></ul>
-      </article>
-
-      <article class="skill-card reveal" data-delay="2">
-        <h3><span class="ico">🧩</span> State Management</h3>
-        <div class="meter" data-level="80"><span class="meter-fill"></span><b>80%</b></div>
-        <ul class="chips"><li>BLoC</li><li>Cubit</li><li>Provider</li></ul>
-      </article>
-
-      <article class="skill-card reveal">
-        <h3><span class="ico">☁️</span> Backend Integration</h3>
-        <div class="meter" data-level="75"><span class="meter-fill"></span><b>75%</b></div>
-        <ul class="chips"><li>Supabase</li><li>Firebase</li><li>REST APIs</li><li>Auth</li></ul>
-      </article>
-
-      <article class="skill-card reveal" data-delay="1">
-        <h3><span class="ico">💾</span> Local Storage</h3>
-        <div class="meter" data-level="80"><span class="meter-fill"></span><b>80%</b></div>
-        <ul class="chips"><li>Hive</li><li>SQLite</li><li>SharedPreferences</li><li>Caching</li><li>Offline reading</li></ul>
-      </article>
-
-      <article class="skill-card reveal" data-delay="2">
-        <h3><span class="ico">🌐</span> Web Technologies</h3>
-        <div class="meter" data-level="70"><span class="meter-fill"></span><b>70%</b></div>
-        <ul class="chips"><li>HTML</li><li>CSS</li><li>PHP</li></ul>
-      </article>
-    </div>
-
-    <div class="marquee reveal" aria-hidden="true">
-      <div class="marquee-track">
-        <span>Flutter</span><i>◆</i><span>Dart</span><i>◆</i><span>BLoC</span><i>◆</i>
-        <span>Provider</span><i>◆</i><span>Supabase</span><i>◆</i><span>Hive</span><i>◆</i>
-        <span>Flutter</span><i>◆</i><span>Dart</span><i>◆</i><span>BLoC</span><i>◆</i>
-        <span>Provider</span><i>◆</i><span>Supabase</span><i>◆</i><span>Hive</span><i>◆</i>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PROJECTS ============ -->
-<section class="section" id="projects">
-  <div class="container">
-    <div class="sec-head reveal">
-      <p class="sec-label">03 — Projects</p>
-      <h2>Things I've <span class="grad-text">built</span></h2>
-    </div>
-
-    <div class="filters reveal" role="tablist" aria-label="Project filters">
-      <button class="filter is-active" data-filter="all" role="tab" aria-selected="true">All</button>
-      <button class="filter" data-filter="mobile" role="tab" aria-selected="false">Mobile</button>
-      <button class="filter" data-filter="web" role="tab" aria-selected="false">Web</button>
-    </div>
-
-    <div class="projects-grid" id="projectsGrid">
-      <article class="project reveal" data-cat="mobile">
-        <div class="project-thumb t-1"><span class="thumb-glyph">🗂️</span></div>
-        <div class="project-body">
-          <div class="project-top"><h3>Yomi Board</h3></div>
-          <p>A comprehensive Kanban-style task management app built from scratch. Features secure user authentication and database management, with global state and dynamic themes handled via BLoC architecture.</p>
-          <ul class="chips sm"><li>Flutter</li><li>Supabase</li><li>BLoC</li></ul>
-          <div class="project-links">
-            <a href="https://github.com/PhooPwintSone/yomi-board" target="_blank" rel="noopener" aria-label="Yomi Board source code">Source</a>
+            </div>
           </div>
         </div>
-      </article>
+      </section>
 
-      <article class="project reveal" data-delay="1" data-cat="mobile">
-        <div class="project-thumb t-2"><span class="thumb-glyph">💅</span></div>
-        <div class="project-body">
-          <div class="project-top"><h3>Mari Customer App</h3></div>
-          <p>A consumer-facing nail salon booking application. Collaborated directly with designers to translate UI/UX mockups into a responsive mobile interface, utilizing Provider for state management and REST APIs for dynamic data.</p>
-          <ul class="chips sm"><li>Flutter</li><li>Provider</li><li>REST APIs</li></ul>
-          <div class="project-links">
-            <a href="https://github.com/PhooPwintSone/Mari_Customer_App" target="_blank" rel="noopener" aria-label="Mari Customer App source code">Source</a>
+      <!-- ============ SKILLS ============ -->
+      <section class="section" id="skills">
+        <div class="container">
+          <div class="sec-head reveal">
+            <p class="sec-label">02 — Skills</p>
+            <h2>My <span class="grad-text">toolbox</span></h2>
+          </div>
+
+          <div class="skills-grid">
+            <article class="skill-card reveal">
+              <h3><span class="ico">📱</span> Flutter &amp; Dart</h3>
+              <div class="meter" data-level="85">
+                <span class="meter-fill"></span><b>85%</b>
+              </div>
+              <ul class="chips">
+                <li>Flutter</li>
+                <li>Dart</li>
+                <li>Cross-platform</li>
+                <li>Material 3</li>
+                <li>Animations</li>
+              </ul>
+            </article>
+
+            <article class="skill-card reveal" data-delay="1">
+              <h3><span class="ico">🎨</span> UI/UX Implementation</h3>
+              <div class="meter" data-level="90">
+                <span class="meter-fill"></span><b>90%</b>
+              </div>
+              <ul class="chips">
+                <li>Figma to app</li>
+                <li>Pixel-perfect</li>
+                <li>Responsive</li>
+                <li>Design handoff</li>
+              </ul>
+            </article>
+
+            <article class="skill-card reveal" data-delay="2">
+              <h3><span class="ico">🧩</span> State Management</h3>
+              <div class="meter" data-level="80">
+                <span class="meter-fill"></span><b>80%</b>
+              </div>
+              <ul class="chips">
+                <li>BLoC</li>
+                <li>Cubit</li>
+                <li>Provider</li>
+              </ul>
+            </article>
+
+            <article class="skill-card reveal">
+              <h3><span class="ico">☁️</span> Backend Integration</h3>
+              <div class="meter" data-level="75">
+                <span class="meter-fill"></span><b>75%</b>
+              </div>
+              <ul class="chips">
+                <li>Supabase</li>
+                <li>Firebase</li>
+                <li>REST APIs</li>
+                <li>Auth</li>
+              </ul>
+            </article>
+
+            <article class="skill-card reveal" data-delay="1">
+              <h3><span class="ico">💾</span> Local Storage</h3>
+              <div class="meter" data-level="80">
+                <span class="meter-fill"></span><b>80%</b>
+              </div>
+              <ul class="chips">
+                <li>Hive</li>
+                <li>SQLite</li>
+                <li>SharedPreferences</li>
+                <li>Caching</li>
+                <li>Offline reading</li>
+              </ul>
+            </article>
+
+            <article class="skill-card reveal" data-delay="2">
+              <h3><span class="ico">🌐</span> Web Technologies</h3>
+              <div class="meter" data-level="70">
+                <span class="meter-fill"></span><b>70%</b>
+              </div>
+              <ul class="chips">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>PHP</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="marquee reveal" aria-hidden="true">
+            <div class="marquee-track">
+              <span>Flutter</span><i>◆</i><span>Dart</span><i>◆</i
+              ><span>BLoC</span><i>◆</i> <span>Provider</span><i>◆</i
+              ><span>Supabase</span><i>◆</i><span>Hive</span><i>◆</i>
+              <span>Flutter</span><i>◆</i><span>Dart</span><i>◆</i
+              ><span>BLoC</span><i>◆</i> <span>Provider</span><i>◆</i
+              ><span>Supabase</span><i>◆</i><span>Hive</span><i>◆</i>
+            </div>
           </div>
         </div>
-      </article>
+      </section>
 
-      <article class="project reveal" data-delay="2" data-cat="web">
-        <div class="project-thumb t-3"><span class="thumb-glyph">📝</span></div>
-        <div class="project-body">
-          <div class="project-top"><h3>Cross-Platform Mini-Blog</h3></div>
-          <p>A responsive blogging platform optimized for both Web and Android. Includes complex UI features like pagination, image uploads, interactive reaction buttons, and seamless offline reading support.</p>
-          <ul class="chips sm"><li>Flutter</li><li>Hive</li><li>Vercel</li></ul>
-          <div class="project-links">
-            <a href="https://github.com/PhooPwintSone/mini_blog_app_web" target="_blank" rel="noopener" aria-label="Cross-Platform Mini-Blog source code">Source</a>
+      <!-- ============ PROJECTS ============ -->
+      <section class="section" id="projects">
+        <div class="container">
+          <div class="sec-head reveal">
+            <p class="sec-label">03 — Projects</p>
+            <h2>Things I've <span class="grad-text">built</span></h2>
+          </div>
+
+          <div
+            class="filters reveal"
+            role="tablist"
+            aria-label="Project filters"
+          >
+            <button
+              class="filter is-active"
+              data-filter="all"
+              role="tab"
+              aria-selected="true"
+            >
+              All
+            </button>
+            <button
+              class="filter"
+              data-filter="mobile"
+              role="tab"
+              aria-selected="false"
+            >
+              Mobile
+            </button>
+            <button
+              class="filter"
+              data-filter="web"
+              role="tab"
+              aria-selected="false"
+            >
+              Web
+            </button>
+          </div>
+
+          <div class="projects-grid" id="projectsGrid">
+            <article class="project reveal" data-cat="mobile">
+              <div class="project-thumb t-1">
+                <span class="thumb-glyph">🗂️</span>
+              </div>
+              <div class="project-body">
+                <div class="project-top"><h3>Yomi Board</h3></div>
+                <p>
+                  A comprehensive Kanban-style task management app built from
+                  scratch. Features secure user authentication and database
+                  management, with global state and dynamic themes handled via
+                  BLoC architecture.
+                </p>
+                <ul class="chips sm">
+                  <li>Flutter</li>
+                  <li>Supabase</li>
+                  <li>BLoC</li>
+                </ul>
+                <div class="project-links">
+                  <a
+                    href="https://github.com/PhooPwintSone/yomi-board"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Yomi Board source code"
+                    >Source</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="project reveal" data-delay="1" data-cat="mobile">
+              <div class="project-thumb t-2">
+                <span class="thumb-glyph">💅</span>
+              </div>
+              <div class="project-body">
+                <div class="project-top"><h3>Mari Customer App</h3></div>
+                <p>
+                  A consumer-facing nail salon booking application. Collaborated
+                  directly with designers to translate UI/UX mockups into a
+                  responsive mobile interface, utilizing Provider for state
+                  management and REST APIs for dynamic data.
+                </p>
+                <ul class="chips sm">
+                  <li>Flutter</li>
+                  <li>Provider</li>
+                  <li>REST APIs</li>
+                </ul>
+                <div class="project-links">
+                  <a
+                    href="https://github.com/PhooPwintSone/Mari_Customer_App"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Mari Customer App source code"
+                    >Source</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="project reveal" data-delay="2" data-cat="web">
+              <div class="project-thumb t-3">
+                <span class="thumb-glyph">📝</span>
+              </div>
+              <div class="project-body">
+                <div class="project-top"><h3>Cross-Platform Mini-Blog</h3></div>
+                <p>
+                  A responsive blogging platform optimized for both Web and
+                  Android. Includes complex UI features like pagination, image
+                  uploads, interactive reaction buttons, and seamless offline
+                  reading support.
+                </p>
+                <ul class="chips sm">
+                  <li>Flutter</li>
+                  <li>Hive</li>
+                  <li>Vercel</li>
+                </ul>
+                <div class="project-links">
+                  <a
+                    href="https://github.com/PhooPwintSone/mini_blog_app_web"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Cross-Platform Mini-Blog source code"
+                    >Source</a
+                  >
+                </div>
+              </div>
+            </article>
           </div>
         </div>
-      </article>
-    </div>
-  </div>
-</section>
+      </section>
 
-<!-- ============ EXPERIENCE ============ -->
-<section class="section" id="experience">
-  <div class="container">
-    <div class="sec-head reveal">
-      <p class="sec-label">04 — Experience</p>
-      <h2>Where I've <span class="grad-text">worked</span></h2>
-    </div>
+      <!-- ============ EXPERIENCE ============ -->
+      <section class="section" id="experience">
+        <div class="container">
+          <div class="sec-head reveal">
+            <p class="sec-label">04 — Experience</p>
+            <h2>Where I've <span class="grad-text">worked</span></h2>
+          </div>
 
-    <div class="timeline">
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <span class="tl-date">August, 2026 — Present</span>
-          <h3>Junior Mobile Developer</h3>
-          <p class="tl-org">Digital Base</p>
-          <p>Drive the end-to-end development of cross-platform Flutter applications. I architect robust state management using BLoC and Cubit, and integrate cloud backend services like Supabase and Firebase for real-time data syncing and authentication.</p>
-          <ul class="chips sm"><li>BLoC &amp; Cubit</li><li>Supabase</li><li>Firebase</li></ul>
+          <div class="timeline">
+            <div class="tl-item reveal">
+              <div class="tl-dot"></div>
+              <div class="tl-card">
+                <span class="tl-date">August, 2026 — Present</span>
+                <h3>Junior Mobile Developer</h3>
+                <p class="tl-org">Digital Base</p>
+                <p>
+                  Drive the end-to-end development of cross-platform Flutter
+                  applications. I architect robust state management using BLoC
+                  and Cubit, and integrate cloud backend services like Supabase
+                  and Firebase for real-time data syncing and authentication.
+                </p>
+                <ul class="chips sm">
+                  <li>BLoC &amp; Cubit</li>
+                  <li>Supabase</li>
+                  <li>Firebase</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="tl-item reveal">
+              <div class="tl-dot"></div>
+              <div class="tl-card">
+                <span class="tl-date">May 2026 — July 2026</span>
+                <h3>Mobile Developer Intern</h3>
+                <p class="tl-org">Internship</p>
+                <p>
+                  Developed a consumer-facing nail salon booking mobile
+                  application. Collaborated directly with UI/UX designers to
+                  translate visual mockups into fully functional, responsive
+                  screens. Managed internal app state with Provider and wired up
+                  REST APIs for dynamic data.
+                </p>
+                <ul class="chips sm">
+                  <li>UI Implementation</li>
+                  <li>Provider</li>
+                  <li>REST API</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="tl-item reveal">
+              <div class="tl-dot"></div>
+              <div class="tl-card">
+                <span class="tl-date">2021 — Present</span>
+                <h3>Freelance Translator &amp; Post-Editor</h3>
+                <p class="tl-org">Independent · Remote</p>
+                <p>
+                  Provide accurate machine translation post-editing and digital
+                  localization services between English and Burmese. Developed
+                  strong communication, problem-solving, and time-management
+                  skills while delivering independent client projects.
+                </p>
+                <ul class="chips sm">
+                  <li>Localization</li>
+                  <li>Communication</li>
+                  <li>Time Management</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="tl-item reveal">
+              <div class="tl-dot"></div>
+              <div class="tl-card">
+                <span class="tl-date">Active</span>
+                <h3>Independent Developer</h3>
+                <p class="tl-org">GitHub</p>
+                <p>
+                  Continuously building and deploying cross-platform
+                  applications to master modern Flutter workflows. I design and
+                  build full projects from scratch, like the Yomi Board task
+                  manager and a cross-platform mini-blog. My public work lives
+                  at <code>github.com/PhooPwintSone</code>.
+                </p>
+                <ul class="chips sm">
+                  <li>Dart</li>
+                  <li>App Architecture</li>
+                  <li>Git</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <span class="tl-date">May 2026 — July 2026</span>
-          <h3>Mobile Developer Intern</h3>
-          <p class="tl-org">Internship</p>
-          <p>Developed a consumer-facing nail salon booking mobile application. Collaborated directly with UI/UX designers to translate visual mockups into fully functional, responsive screens. Managed internal app state with Provider and wired up REST APIs for dynamic data.</p>
-          <ul class="chips sm"><li>UI Implementation</li><li>Provider</li><li>REST API</li></ul>
+      <!-- ============ CONTACT ============ -->
+      <section class="section" id="contact">
+        <div class="container">
+          <div class="sec-head reveal">
+            <p class="sec-label">05 — Contact</p>
+            <h2>Let's build <span class="grad-text">something</span></h2>
+            <p class="sec-sub">
+              Got an app idea, a performance problem, or a team that needs a
+              Flutter dev? My inbox is open.
+            </p>
+          </div>
+
+          <div class="contact-grid">
+            <div class="contact-info reveal">
+              <a class="contact-item" href="mailto:maphoopwintsone@gmail.com">
+                <span class="ci-ico">✉️</span>
+                <div><small>Email</small><b>maphoopwintsone@gmail.com</b></div>
+              </a>
+              <div class="contact-item">
+                <span class="ci-ico">📍</span>
+                <div>
+                  <small>Based in</small><b>Yangon, Myanmar · Remote</b>
+                </div>
+              </div>
+              <div class="contact-item">
+                <span class="ci-ico">⏱️</span>
+                <div>
+                  <small>Response time</small><b>Usually within a day</b>
+                </div>
+              </div>
+              <a class="btn btn-ghost btn-block" href="resume.pdf" download>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 3v12M7 11l5 5 5-5M4 21h16" />
+                </svg>
+                Download CV
+              </a>
+            </div>
+
+            <form
+              class="contact-form reveal"
+              data-delay="2"
+              id="contactForm"
+              novalidate
+            >
+              <div class="field">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder=" "
+                  required
+                />
+                <label for="name">Your name</label>
+              </div>
+              <div class="field">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder=" "
+                  required
+                />
+                <label for="email">Email address</label>
+              </div>
+              <div class="field">
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  placeholder=" "
+                  required
+                ></textarea>
+                <label for="message">Tell me about your project</label>
+              </div>
+              <p class="form-msg" id="formMsg" role="status"></p>
+              <button type="submit" class="btn btn-primary btn-block">
+                Send message
+                <svg
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M22 2 11 13M22 2l-7 20-4-9-9-4z" />
+                </svg>
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
+      </section>
+    </main>
 
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <span class="tl-date">2021 — Present</span>
-          <h3>Freelance Translator &amp; Post-Editor</h3>
-          <p class="tl-org">Independent · Remote</p>
-          <p>Provide accurate machine translation post-editing and digital localization services between English and Burmese. Developed strong communication, problem-solving, and time-management skills while delivering independent client projects.</p>
-          <ul class="chips sm"><li>Localization</li><li>Communication</li><li>Time Management</li></ul>
-        </div>
-      </div>
-
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <span class="tl-date">Active</span>
-          <h3>Independent Developer</h3>
-          <p class="tl-org">GitHub</p>
-          <p>Continuously building and deploying cross-platform applications to master modern Flutter workflows. I design and build full projects from scratch, like the Yomi Board task manager and a cross-platform mini-blog. My public work lives at <code>github.com/PhooPwintSone</code>.</p>
-          <ul class="chips sm"><li>Dart</li><li>App Architecture</li><li>Git</li></ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONTACT ============ -->
-<section class="section" id="contact">
-  <div class="container">
-    <div class="sec-head reveal">
-      <p class="sec-label">05 — Contact</p>
-      <h2>Let's build <span class="grad-text">something</span></h2>
-      <p class="sec-sub">Got an app idea, a performance problem, or a team that needs a Flutter dev? My inbox is open.</p>
-    </div>
-
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <a class="contact-item" href="mailto:maphoopwintsone@gmail.com">
-          <span class="ci-ico">✉️</span>
-          <div><small>Email</small><b>maphoopwintsone@gmail.com</b></div>
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p>
+          © <span id="year">2026</span> Phoo Pwint Sone. Built with Flutter
+          energy &amp; plain HTML/CSS/JS.
+        </p>
+        <a href="#home" class="to-top" aria-label="Back to top">
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 20V6M6 12l6-6 6 6" />
+          </svg>
         </a>
-        <div class="contact-item">
-          <span class="ci-ico">📍</span>
-          <div><small>Based in</small><b>Yangon, Myanmar · Remote</b></div>
-        </div>
-        <div class="contact-item">
-          <span class="ci-ico">⏱️</span>
-          <div><small>Response time</small><b>Usually within a day</b></div>
-        </div>
-        <a class="btn btn-ghost btn-block" href="resume.pdf" download>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></svg>
-          Download CV
-        </a>
       </div>
+    </footer>
 
-      <form class="contact-form reveal" data-delay="2" id="contactForm" novalidate>
-        <div class="field">
-          <input type="text" id="name" name="name" placeholder=" " required />
-          <label for="name">Your name</label>
-        </div>
-        <div class="field">
-          <input type="email" id="email" name="email" placeholder=" " required />
-          <label for="email">Email address</label>
-        </div>
-        <div class="field">
-          <textarea id="message" name="message" rows="5" placeholder=" " required></textarea>
-          <label for="message">Tell me about your project</label>
-        </div>
-        <p class="form-msg" id="formMsg" role="status"></p>
-        <button type="submit" class="btn btn-primary btn-block">
-          Send message
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
-        </button>
-      </form>
-    </div>
-  </div>
-</section>
-</main>
-
-<!-- ============ FOOTER ============ -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <p>© <span id="year">2026</span> Phoo Pwint Sone. Built with Flutter energy &amp; plain HTML/CSS/JS.</p>
-    <a href="#home" class="to-top" aria-label="Back to top">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V6M6 12l6-6 6 6"/></svg>
-    </a>
-  </div>
-</footer>
-
-<script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
