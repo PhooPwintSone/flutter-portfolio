@@ -3,9 +3,7 @@
    Vanilla JS, no dependencies.
    ========================================================= */
 
-import { inject } from '@vercel/analytics';
 
-inject();
    (function () {
   'use strict';
 
@@ -33,13 +31,22 @@ inject();
   });
 
   /* ---------- 3. Theme toggle ---------- */
+  /* localStorage throws SecurityError over file:// and in some privacy modes. This file
+     is a single unguarded IIFE, so a throw here would abort every later section and leave
+     all .reveal content stuck at opacity 0 — a blank page below the nav. Never touch
+     localStorage directly; go through these. */
+  const store = {
+    get(k) { try { return window.localStorage.getItem(k); } catch (_) { return null; } },
+    set(k, v) { try { window.localStorage.setItem(k, v); } catch (_) { /* private mode / quota */ } }
+  };
+
   const themeBtn = $('#themeToggle');
-  const stored = localStorage.getItem('theme');
-  if (stored) document.documentElement.dataset.theme = stored;
+  const stored = store.get('theme');
+  if (stored === 'light' || stored === 'dark') document.documentElement.dataset.theme = stored;
   themeBtn.addEventListener('click', () => {
     const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;
-    localStorage.setItem('theme', next);
+    store.set('theme', next);
   });
 
   /* ---------- 4. Scroll reveal ---------- */

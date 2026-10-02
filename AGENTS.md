@@ -11,12 +11,22 @@ looking for Dart or reach for `flutter pub`.
 There is **no `package.json`, bundler, framework, test runner, linter, formatter, or CI**. Don't add
 one unprompted. `script.js` is a single IIFE (no `import`/`export`), loaded as a classic script.
 
-Vercel Analytics is wired via the **build-free `<script defer>` snippet**, not the npm package:
-`@vercel/analytics` is ESM and would need a bundler, which this repo deliberately has none of. The
-tag lives in `<head>` and points at `/_vercel/insights/script.js`, a path **only Vercel serves** —
-locally and on any other host it 404s, which is harmless but will show as a console error. Because
-it carries `defer` it is safe in `<head>`; `script.js` must stay the last element in `<body>` and
-**must not** gain `defer`, since it binds to nodes that don't exist until the body has parsed.
+`index.html` is Prettier-formatted (2-space indent, one attribute per line). Re-run the formatter after
+editing it or hand-edits will stand out and may get clobbered on the next save.
+
+`script.js` must stay the last element in `<body>` and **must not** gain `defer`, since it binds to
+nodes that don't exist until the body has parsed. A `defer`red tag is only safe in `<head>`.
+
+Local storage goes through the `store` helper in §3 — never call `localStorage` directly. It throws
+`SecurityError` over `file://` and in some privacy modes, and because the whole file is one unguarded
+IIFE, a throw there aborts every later section and leaves all 35 `.reveal` elements stuck at
+`opacity: 0`, i.e. a blank page below the nav.
+
+Vercel Analytics is **not currently wired up**. The build-free `<script defer src="/_vercel/insights/script.js">`
+snippet was tried in `<head>` and then removed, because `/_vercel/…` is served only by Vercel's edge
+and 404s everywhere else — including locally, which just adds a console error. `@vercel/analytics`
+is the npm alternative but is ESM and would require a bundler this repo deliberately lacks. Add the
+script tag back only when the site is actually deployed on Vercel.
 
 ## Run it
 
