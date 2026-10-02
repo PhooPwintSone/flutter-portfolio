@@ -11,6 +11,13 @@ looking for Dart or reach for `flutter pub`.
 There is **no `package.json`, bundler, framework, test runner, linter, formatter, or CI**. Don't add
 one unprompted. `script.js` is a single IIFE (no `import`/`export`), loaded as a classic script.
 
+Vercel Analytics is wired via the **build-free `<script defer>` snippet**, not the npm package:
+`@vercel/analytics` is ESM and would need a bundler, which this repo deliberately has none of. The
+tag lives in `<head>` and points at `/_vercel/insights/script.js`, a path **only Vercel serves** —
+locally and on any other host it 404s, which is harmless but will show as a console error. Because
+it carries `defer` it is safe in `<head>`; `script.js` must stay the last element in `<body>` and
+**must not** gain `defer`, since it binds to nodes that don't exist until the body has parsed.
+
 ## Run it
 
 ```powershell
