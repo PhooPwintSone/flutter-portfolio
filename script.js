@@ -2,7 +2,11 @@
    Flutter Portfolio — interactions
    Vanilla JS, no dependencies.
    ========================================================= */
-(function () {
+
+import { inject } from '@vercel/analytics';
+
+inject();
+   (function () {
   'use strict';
 
   const $  = (s, c = document) => c.querySelector(s);
