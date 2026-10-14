@@ -445,6 +445,8 @@ html[data-theme="light"] .filter.is-active { color: #fff; }
 .t-1 { background: linear-gradient(135deg, #42a5f5, #7c4dff); }
 .t-2 { background: linear-gradient(135deg, #00c2a8, #0b7fd4); }
 .t-3 { background: linear-gradient(135deg, #ff8a4c, #ff4c7b); }
+.t-4 { background: linear-gradient(135deg, #334155, #6366f1); }
+.t-5 { background: linear-gradient(135deg, #6dd5fa, #2980b9); }
 
 .project-body { display: flex; flex-direction: column; flex: 1; padding: 20px 22px 22px; }
 .project-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
@@ -489,11 +491,28 @@ html[data-theme="light"] .filter.is-active { color: #fff; }
   display: flex; align-items: center; gap: 14px; padding: 15px 18px; border-radius: var(--radius-sm);
   background: var(--surface); border: 1px solid var(--border); transition: all 0.3s var(--ease);
 }
-a.contact-item:hover { transform: translateX(4px); border-color: var(--border-strong); background: var(--surface-2); }
+.contact-email:hover { transform: translateX(4px); border-color: var(--border-strong); background: var(--surface-2); }
 .ci-ico { font-size: 1.2rem; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 11px; background: var(--surface-2); flex: none; }
 .contact-item small { display: block; font-size: 0.76rem; color: var(--text-faint); }
 .contact-item b { font-weight: 600; font-size: 0.95rem; }
 .contact-info .btn { margin-top: 6px; }
+
+/* copy-email button — sits beside the address, inside the email card */
+.contact-email { padding-right: 12px; }
+.ci-main { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0; }
+.ci-main > div { min-width: 0; }
+.ci-main b { overflow-wrap: anywhere; }
+.copy-btn {
+  flex: none; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  font: inherit; font-size: 0.74rem; font-weight: 600; padding: 8px 12px; border-radius: 999px;
+  color: var(--text-dim); background: var(--surface-2); border: 1px solid var(--border);
+  transition: all 0.25s var(--ease);
+}
+.copy-btn:hover { color: var(--text); border-color: var(--border-strong); }
+.copy-btn:focus-visible { outline: none; border-color: var(--flutter); box-shadow: 0 0 0 4px rgba(66,165,245,0.16); }
+.copy-btn.copied { background: var(--grad); border-color: transparent; color: #05121f; }
+.copy-btn.copy-failed { color: #ff7a72; border-color: rgba(255,122,114,0.55); }
+html[data-theme="light"] .copy-btn.copied { color: #fff; }
 
 .contact-form { display: flex; flex-direction: column; gap: 16px; padding: 28px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); }
 .field { position: relative; }
@@ -581,4 +600,5 @@ html[data-theme="light"] .field input, html[data-theme="light"] .field textarea 
   .hero-cta .btn { width: 100%; }
   .stats-grid { grid-template-columns: 1fr; }
   .float-chip { display: none; }
+  .copy-text { display: none; }
 }

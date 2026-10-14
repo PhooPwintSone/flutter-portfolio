@@ -2,7 +2,7 @@
    Nothing is reimplemented: section 12 is sliced out of the shipped file and run
    against a minimal DOM stub, so a regression in the actual code fails here. */
 const fs = require('fs');
-const path = 'C:/Users/User/flutter-portfolio/script.js';
+const path = __dirname + '/script.js';
 const src = fs.readFileSync(path, 'utf8');
 
 // --- slice the real drag section out of the shipped file ---

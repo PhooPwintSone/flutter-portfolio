@@ -11,15 +11,20 @@ looking for Dart or reach for `flutter pub`.
 There is **no `package.json`, bundler, framework, test runner, linter, formatter, or CI**. Don't add
 one unprompted. `script.js` is a single IIFE (no `import`/`export`), loaded as a classic script.
 
-`index.html` is Prettier-formatted (2-space indent, one attribute per line). Re-run the formatter after
-editing it or hand-edits will stand out and may get clobbered on the next save.
+`index.html` is Prettier-formatted: 2-space indent, 80-column wrap, double-quoted attributes, and
+**single quotes inside inline JS**. There is no Prettier config in the repo and no local install, and
+Prettier's *defaults* do not reproduce the file — `npx prettier@3.3.3 --single-quote --check index.html`
+is the honest check. (`--single-quote` is the part that matters.) Two stat lines in `#about`
+(`…</b><span>Years experience</span>`) run a couple of columns past 80 and Prettier would split them;
+they are fine left inline. Match the surrounding style by hand rather than running a whole-file
+`--write`, which would reformat unrelated lines and swamp the change.
 
 `script.js` must stay the last element in `<body>` and **must not** gain `defer`, since it binds to
 nodes that don't exist until the body has parsed. A `defer`red tag is only safe in `<head>`.
 
 Local storage goes through the `store` helper in §3 — never call `localStorage` directly. It throws
 `SecurityError` over `file://` and in some privacy modes, and because the whole file is one unguarded
-IIFE, a throw there aborts every later section and leaves all 35 `.reveal` elements stuck at
+IIFE, a throw there aborts every later section and leaves every `.reveal` element stuck at
 `opacity: 0`, i.e. a blank page below the nav.
 
 Vercel Analytics is injected by a small inline block at the end of `<head>`, guarded on
@@ -36,10 +41,15 @@ Run it with `node test-chip-drag.js` after touching the drag code. It asserts th
 four-way movement, leash cap, viewport clamp, spring-back-to-zero and `is-dragging` cleanup.
 There is otherwise no test setup in this repo — do not add a runner for it.
 
+The test finds §12 by its literal `/* ---------- 12.` header and stops at `/* ---------- 13.`, so
+**renumbering the script sections breaks it.** Add new sections at the end (the current last one is
+§15) rather than renumbering or inserting. It also reads `script.js` via `__dirname`, so it works
+wherever the folder lives — do not reintroduce an absolute path.
+
 ## Run it
 
 ```powershell
-cd C:\Users\User\flutter-portfolio
+cd "D:\Mobile class\flutter_class\flutter-portfolio"
 python -m http.server 8000   # then open http://localhost:8000
 ```
 
@@ -59,14 +69,15 @@ templating, no JSON — content *is* the markup.
 | `.project[data-cat="mobile\|web\|package"]` | §9 | Must match a `.filter[data-filter=...]` button. A new category needs the button **and** every card's value. |
 | `.nav-link[href="#id"]` | §5 scroll spy | Section ids with no nav link are invisible to the spy. `#home` has no nav link, so nothing is active at the top of the page. |
 | `#typed` | §8 | Empty element; the hero phrases live in `script.js`, not the HTML. |
+| `.copy-btn[data-copy]` | §15 | Copies its own `data-copy` value. Falls back to a hidden `<textarea>` + `execCommand` when `navigator.clipboard` is unavailable (non-secure context, e.g. `file://`). Unlike the rest, it **is** guarded, so a missing button is harmless. |
 
 New non-active filter buttons must ship with `aria-selected="false"` (the script only toggles it
 after the first click).
 
-Project thumbnails are **CSS gradients on `.t-1`…`.t-3` plus an emoji glyph** — no image files are
-involved. There are only three projects, so `.t-4`…`.t-6` and the `.year` span rule were deleted as
-dead. A card with no `.t-N` class renders an unstyled blank thumbnail, so a fourth project needs a
-new gradient (and its `.year` back).
+Project thumbnails are **CSS gradients on `.t-1`…`.t-5` plus an emoji glyph** — no image files are
+involved. The gradients were pruned to the number of live cards (`.t-6` was deleted as dead, and the
+`.year` span rule with it). A card with no `.t-N` class renders an unstyled blank thumbnail, so
+**every new project needs its own gradient** — `.t-1`…`.t-5` are taken, and the next is `.t-6`.
 
 The **only** image assets are logo derivatives, all generated from `logo.jpg`:
 
@@ -128,13 +139,22 @@ critical path (serve over HTTP rather than `file://`).
 
 ## Content is intentionally placeholder
 
-Most of the biography is **placeholder content for a fictional persona** (the invented employers in
-`#experience` and the `.year` styling) per the README's "Make it yours" table. The persona itself
-is real — name, email, GitHub, LinkedIn, the three project repos and `resume.pdf` are all genuine,
-so don't rewrite *those* as placeholders. Change any of it only when asked.
+The README's "Make it yours" table is the map of what is editable. The persona itself is real — name,
+email, GitHub, LinkedIn, the project repos and `resume.pdf` are all genuine, so don't rewrite *those*
+as placeholders. Change any of it only when asked.
 
-The contact form (§10) validates and then says it isn't wired up. It never sends a request. Wiring
-it up means replacing that handler body — see the README's Formspree snippet.
+**Unverified:** this section used to call the `#experience` employers invented, but the live entries
+(e.g. "Digital Base", August 2026) match the real GitHub profile — so treat that provenance as unknown
+and confirm before editing `#experience`. The `.year` span rule this note also mentioned is gone; the
+project cards carry no year.
+
+The contact form (§10) is wired to **FormSubmit** (`https://formsubmit.co/ajax/<address>`) — a
+no-signup relay, so the site still has no backend. Two FormSubmit behaviours the handler exists to
+absorb, and which will bite anyone who "simplifies" it: it answers **HTTP 200 even when it refuses**,
+and it reports success as the **string** `"true"` — so `if (res.ok)` or `if (data.success)` both
+report a false success, because `"false"` is truthy. The first submission ever made triggers a
+confirmation email to the owner; until that link is clicked the relay keeps refusing with
+`success:"false"`. Swapping `CONTACT_ENDPOINT` for Formspree or Web3Forms needs no other change.
 
 `README.md` is the user-facing doc for content and theming; keep it in sync if you change where
 things live.

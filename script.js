@@ -163,12 +163,28 @@
     });
   });
 
-  /* ---------- 10. Contact form (demo — wire to your backend) ---------- */
+  /* ---------- 10. Contact form ---------- */
+  /* Wired to FormSubmit, a no-signup form relay — so there is still no backend and no
+     build step. Post to the /ajax/ endpoint to keep the visitor on the page; the plain
+     endpoint does nothing under fetch.
+     Two FormSubmit quirks this has to absorb:
+       1. it answers HTTP 200 even when it REFUSES a submission, and
+       2. success comes back as the string "true" — and "false" is truthy in JS, so
+          `if (res.ok)` or `if (data.success)` would both report a false success.
+     The very first submission triggers a confirmation email; until that link is clicked
+     the relay answers success:"false". Swap CONTACT_ENDPOINT for Formspree
+     (https://formspree.io/f/<id>) or Web3Forms and the rest works unchanged. */
+  const CONTACT_ENDPOINT = 'https://formsubmit.co/ajax/maphoopwintsone@gmail.com';
   const form = $('#contactForm');
   const msg = $('#formMsg');
+  const sendBtn = form.querySelector('button[type="submit"]');
+  const sendBtnHTML = sendBtn ? sendBtn.innerHTML : '';
+  let sending = false;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (sending) return;
+
     const name = $('#name');
     const email = $('#email');
     const message = $('#message');
@@ -184,9 +200,42 @@
 
     if (!ok) { msg.className = 'form-msg err'; return; }
 
-    msg.className = 'form-msg ok';
-    msg.textContent = 'Thanks! This demo form is not wired up yet — add your endpoint in script.js.';
-    form.reset();
+    const sender = name.value.trim();
+    sending = true;
+    msg.className = 'form-msg';
+    msg.textContent = 'Sending…';
+    if (sendBtn) { sendBtn.disabled = true; sendBtn.textContent = 'Sending…'; }
+
+    try {
+      const res = await fetch(CONTACT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: sender,
+          email: email.value.trim(),
+          message: message.value.trim(),
+          _subject: 'Portfolio message from ' + sender,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || String(data.success) !== 'true') {
+        throw new Error(data.message || 'HTTP ' + res.status);
+      }
+
+      msg.className = 'form-msg ok';
+      msg.textContent =
+        'Thanks, ' + sender + ' — your message is on its way. I usually reply within a day.';
+      form.reset();
+    } catch {
+      msg.className = 'form-msg err';
+      msg.textContent =
+        'Sorry, that did not send. Please email me at maphoopwintsone@gmail.com instead.';
+    } finally {
+      sending = false;
+      if (sendBtn) { sendBtn.disabled = false; sendBtn.innerHTML = sendBtnHTML; }
+    }
   });
 
   /* ---------- 11. Cursor glow ---------- */
@@ -377,5 +426,65 @@
       const next = phraseFor(hourNow());
       if (next !== last) { last = next; greeting.textContent = next; }
     }, 60000);
+  }
+
+  /* ---------- 15. Copy-email button ---------- */
+  /* Two tiers, because neither clipboard path is universally available: the async
+     Clipboard API (needs a secure context and a focused document) and the older
+     textarea + execCommand, which still works where the API is blocked. Whichever
+     runs, the button ALWAYS reports the outcome. An earlier version returned early
+     when both failed, so on any browser that blocks programmatic clipboard writes
+     the button did nothing at all — it read as "just UI". */
+  const copyBtn = $('.copy-btn');
+  if (copyBtn) {
+    const copyLabel = copyBtn.querySelector('.copy-text');
+    const copyRest = copyLabel ? copyLabel.textContent : '';
+    const copyAria = copyBtn.getAttribute('aria-label');
+    let copyTimer = null;
+
+    const showCopyState = (state, label, aria) => {
+      copyBtn.classList.toggle('copied', state === 'ok');
+      copyBtn.classList.toggle('copy-failed', state === 'fail');
+      copyBtn.setAttribute('aria-label', aria);
+      if (copyLabel) copyLabel.textContent = label;
+    };
+
+    /* execCommand copies whatever is selected, so the textarea must be in the
+       document, focused and selected first. `readonly` keeps mobile keyboards away. */
+    const execCopy = (text) => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.setAttribute('aria-hidden', 'true');
+      ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0;';
+      document.body.appendChild(ta);
+      let ok = false;
+      try {
+        ta.focus({ preventScroll: true });
+        ta.select();
+        ta.setSelectionRange(0, text.length);
+        ok = document.execCommand('copy');
+      } catch { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    };
+
+    copyBtn.addEventListener('click', async () => {
+      const text = copyBtn.dataset.copy || '';
+      let ok = false;
+
+      if (navigator.clipboard && window.isSecureContext) {
+        try { await navigator.clipboard.writeText(text); ok = true; } catch { ok = false; }
+      }
+      if (!ok) ok = execCopy(text);
+
+      if (ok) {
+        showCopyState('ok', 'Copied!', 'Email address copied');
+      } else {
+        showCopyState('fail', 'Copy failed', 'Could not copy automatically — ' + text);
+      }
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(() => showCopyState('', copyRest, copyAria), 2200);
+    });
   }
 })();
