@@ -28,6 +28,7 @@
   --ff-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
 
   --shadow: 0 18px 45px -22px rgba(0, 0, 0, 0.85);
+  --glow:   rgba(66, 165, 245, 0.35);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -45,6 +46,7 @@ html[data-theme="light"] {
   --flutter-2:     #4a5fe0;
   --mint:          #00956c;
   --shadow: 0 18px 40px -26px rgba(20, 32, 70, 0.55);
+  --glow:          rgba(74, 95, 224, 0.30);
 }
 
 * { box-sizing: border-box; }
@@ -424,41 +426,165 @@ html[data-theme="light"] .code-card { background: #0d1223; }
 .filter.is-active { background: var(--grad); color: #05121f; border-color: transparent; box-shadow: 0 10px 24px -14px rgba(66,165,245,0.9); }
 html[data-theme="light"] .filter.is-active { color: #fff; }
 
-.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 22px; }
+/* Bento grid: three columns on desktop with the flagship spanning two, so the five
+   cards fill a clean 2-row rectangle. Two columns on tablet (flagship full width),
+   one on mobile. */
+.projects-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+.project.wide { grid-column: span 2; }
 .project {
-  display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden;
+  position: relative; display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden;
   background: var(--surface); border: 1px solid var(--border);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   transition: transform 0.4s var(--ease), border-color 0.3s, box-shadow 0.4s;
 }
-.project:hover { transform: translateY(-7px); border-color: var(--border-strong); box-shadow: var(--shadow); }
+.project:hover {
+  transform: translateY(-7px); border-color: var(--border-strong);
+  box-shadow: var(--shadow), 0 0 0 1px var(--glow), 0 22px 52px -28px var(--glow);
+}
 .project.hide { display: none; }
 
+/* Filtered views hold fewer than five cards, so the bento span is dropped and the
+   survivors sit in centred tracks capped at 380px — a lone or paired card centres
+   instead of stretching to fill the container width. */
+.projects-grid.filtered { grid-template-columns: repeat(auto-fit, minmax(290px, 360px)); justify-content: center; }
+.projects-grid.filtered .project.wide { grid-column: auto; }
+
+/* Flagship split: from the desktop breakpoint up, and only while no filter is
+   active, Yomi lays its copy and its visual side by side (visual on the right).
+   Everywhere else it stacks like the other cards. */
+@media (min-width: 961px) {
+  .projects-grid:not(.filtered) .project.split { flex-direction: row; }
+  .projects-grid:not(.filtered) .project.split .project-thumb { order: 2; flex: 1 1 56%; height: auto; min-height: 280px; }
+  .projects-grid:not(.filtered) .project.split .project-body { order: 1; flex: 1 1 44%; justify-content: center; }
+
+  /* The panel is ~420x520 here, so three portrait shots in a plain row would leave a
+     lot of dead space. Instead they overlap into a fanned deck — the outer shots tilt
+     and drop, the centre sits proud — sized only in percentages, so it scales with the
+     panel as the viewport narrows towards the breakpoint. */
+  .projects-grid:not(.filtered) .project.split .thumb-shots.is-fan { align-items: center; padding: 20px 16px; gap: 0; }
+  .projects-grid:not(.filtered) .project.split .thumb-shots.is-fan img {
+    flex: 0 1 auto; width: 52%; height: auto; max-width: none; max-height: none;
+    margin: 0 -15%; border-radius: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .projects-grid:not(.filtered) .project.split .thumb-shots.is-fan img:nth-child(1) { transform: translateY(12px) rotate(-6deg); z-index: 1; }
+  .projects-grid:not(.filtered) .project.split .thumb-shots.is-fan img:nth-child(2) { transform: translateY(-4px); z-index: 3; }
+  .projects-grid:not(.filtered) .project.split .thumb-shots.is-fan img:nth-child(3) { transform: translateY(12px) rotate(6deg); z-index: 2; }
+}
+
 .project-thumb {
-  position: relative; height: 168px; display: grid; place-items: center; overflow: hidden;
+  position: relative; height: 200px; padding: 14px; display: grid; place-items: center; overflow: hidden;
 }
 .project-thumb::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(8,11,22,0.55));
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 45%, rgba(8, 11, 22, 0.42));
 }
-.thumb-glyph { font-size: 3rem; filter: drop-shadow(0 10px 18px rgba(0,0,0,0.45)); transition: transform 0.5s var(--ease); }
-.project:hover .thumb-glyph { transform: scale(1.14) rotate(-6deg); }
-.t-1 { background: linear-gradient(135deg, #42a5f5, #7c4dff); }
-.t-2 { background: linear-gradient(135deg, #00c2a8, #0b7fd4); }
-.t-3 { background: linear-gradient(135deg, #ff8a4c, #ff4c7b); }
-.t-4 { background: linear-gradient(135deg, #334155, #6366f1); }
-.t-5 { background: linear-gradient(135deg, #6dd5fa, #2980b9); }
+/* Tinted dark backdrops (replacing the old bright gradients) so the glass mockups and
+   the weather screenshots read clearly. One accent per card, kept from .t-1-.t-5. */
+.t-1 { background: radial-gradient(120% 120% at 18% 0%, rgba(66, 165, 245, 0.32), transparent 58%), radial-gradient(120% 120% at 90% 100%, rgba(124, 77, 255, 0.30), transparent 58%), #0b0f19; }
+.t-2 { background: radial-gradient(120% 120% at 18% 0%, rgba(0, 229, 160, 0.26), transparent 58%), radial-gradient(120% 120% at 90% 100%, rgba(11, 127, 212, 0.32), transparent 58%), #0b0f19; }
+.t-3 { background: radial-gradient(120% 120% at 18% 0%, rgba(255, 138, 76, 0.26), transparent 58%), radial-gradient(120% 120% at 90% 100%, rgba(255, 76, 123, 0.26), transparent 58%), #0b0f19; }
+.t-4 { background: radial-gradient(120% 120% at 18% 0%, rgba(99, 102, 241, 0.32), transparent 58%), radial-gradient(120% 120% at 90% 100%, rgba(71, 85, 105, 0.38), transparent 58%), #0b0f19; }
+.t-5 { background: radial-gradient(120% 120% at 18% 0%, rgba(109, 213, 250, 0.26), transparent 58%), radial-gradient(120% 120% at 90% 100%, rgba(41, 128, 185, 0.32), transparent 58%), #0b0f19; }
+
+/* ---------- project visuals: real screenshots + one coded mockup ----------
+   Four of the five cards preview real app screenshots (.thumb-shots). The remaining
+   card, curved_toggle_tabs, has no app UI to screenshot, so it keeps a small coded
+   mockup: .mock sits above the ::after vignette and lifts when the card is hovered.
+   Everything inside that mockup is a fixed colour on purpose — it always depicts dark
+   app UI, so it must not follow the light theme's tokens. */
+.mock { position: relative; z-index: 1; transition: transform 0.5s var(--ease); }
+.project:hover .mock { transform: scale(1.03) translateY(-2px); }
+
+.ln { display: block; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, 0.15); }
+.ln.l2 { width: 64%; }
+.ln.l3 { width: 44%; }
+
+/* curved_toggle_tabs — folder-style tab bar whose active indicator morphs across the
+   row on hover (paused otherwise, and stopped entirely under reduced motion). */
+.mock-tabs { width: min(100%, 250px); }
+.mt-rail { position: relative; display: flex; gap: 4px; padding: 6px 6px 0; border-radius: 14px 14px 0 0; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.10); border-bottom: 0; }
+.mt-ind {
+  position: absolute; top: 6px; left: 6px; width: calc((100% - 20px) / 3); height: calc(100% - 6px);
+  border-radius: 10px 10px 0 0; background: linear-gradient(180deg, rgba(66, 165, 245, 0.95), rgba(124, 158, 255, 0.7));
+  box-shadow: 0 0 20px -3px rgba(66, 165, 245, 0.9);
+  animation: tabMorph 4.5s var(--ease) infinite; animation-play-state: paused;
+}
+.project:hover .mt-ind { animation-play-state: running; }
+@keyframes tabMorph {
+  0%, 20% { transform: translateX(0); }
+  33%, 53% { transform: translateX(calc(100% + 4px)); }
+  66%, 86% { transform: translateX(calc(200% + 8px)); }
+  100% { transform: translateX(0); }
+}
+.mt-tab { position: relative; z-index: 1; flex: 1; padding: 8px 4px; text-align: center; font-size: 0.62rem; color: #7b86a3; }
+.mt-panel { display: flex; flex-direction: column; gap: 7px; padding: 12px; border-radius: 0 0 12px 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.10); border-top: 0; }
+
+/* Floating engineering badges, top-right of each card's visual header. */
+.p-badges { position: absolute; top: 12px; right: 12px; z-index: 2; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; pointer-events: none; }
+.p-badge {
+  display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 999px;
+  font-size: 0.68rem; font-weight: 600; color: #e9edf7; white-space: nowrap;
+  background: rgba(9, 13, 26, 0.66); border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 10px 22px -14px rgba(0, 0, 0, 0.9);
+}
+.p-badge-2 { color: #b9c1d6; font-weight: 500; }
+
+/* Screenshot previews on the .t-N backdrops. The plain shelf is the default: every
+   shot takes an equal share, is capped by width AND by the panel height (so very tall
+   0.47-ratio shots can't overflow), sits bottom-flush and lifts on hover. */
+.project-thumb.is-shots::after { display: none; }
+.thumb-shots {
+  position: absolute; inset: 0; z-index: 1; display: flex; align-items: flex-end;
+  justify-content: center; gap: 9px; padding: 16px 14px 0;
+  transition: transform 0.5s var(--ease);
+}
+.thumb-shots img {
+  flex: 1 1 0; min-width: 0; max-width: 92px; height: auto; max-height: 100%;
+  object-fit: cover; object-position: top;
+  border-radius: 8px 8px 0 0; border: 1px solid rgba(255, 255, 255, 0.2); border-bottom: 0;
+  box-shadow: 0 10px 22px -12px rgba(0, 0, 0, 0.6); transition: transform 0.45s var(--ease);
+}
+.project:hover .thumb-shots:not(.is-fan):not(.is-mixed) img { transform: translateY(-5px); }
+.project:hover .thumb-shots:not(.is-fan):not(.is-mixed) img:nth-child(2) { transform: translateY(-9px); }
+
+/* Cross-Platform Mini-Blog: two wide web shots above two phone shots, so both halves
+   of the "Web & Android" badge are visible in one preview. Both rows are measured off
+   the panel height rather than the width, so a 1.94-ratio and a 0.65-ratio shot sit
+   together without cropping, and the pair stays the same size on wide thumbs too. */
+.thumb-shots.is-mixed { flex-direction: column; align-items: stretch; gap: 8px; padding: 14px 14px 0; }
+.shot-row { display: flex; align-items: flex-end; justify-content: center; gap: 8px; }
+.shot-row.is-wide { flex: 0 0 44%; min-height: 0; }
+.shot-row.is-wide img { flex: 0 1 auto; width: auto; height: 100%; max-width: 49%; max-height: none; border-radius: 7px 7px 0 0; }
+.shot-row.is-tall { flex: 1 1 auto; min-height: 0; }
+.shot-row.is-tall img { flex: 0 0 auto; width: auto; height: 100%; max-width: 46%; border-radius: 7px; }
+.project:hover .thumb-shots.is-mixed { transform: scale(1.03) translateY(-2px); }
+
+/* Yomi Board's tall split panel gets a fanned deck instead of a bottom-flush shelf;
+   the deck itself is defined in the desktop media query above. */
+.project:hover .thumb-shots.is-fan { transform: scale(1.03) translateY(-2px); }
 
 .project-body { display: flex; flex-direction: column; flex: 1; padding: 20px 22px 22px; }
 .project-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .project h3 { font-size: 1.1rem; margin-bottom: 8px; }
 .project-body p { color: var(--text-dim); font-size: 0.92rem; flex: 1; }
-.project-links { display: flex; gap: 16px; margin-top: 16px; }
+
+/* Footer CTAs: Source keeps the arrow slide on hover; Live Demo / pub.dev get a
+   filled pill so the primary action reads first. */
+.project-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-top: 16px; }
 .project-links a {
-  font-size: 0.85rem; font-weight: 600; color: var(--flutter);
-  display: inline-flex; align-items: center; gap: 5px; transition: gap 0.25s, color 0.25s;
+  display: inline-flex; align-items: center; gap: 5px; font-size: 0.85rem; font-weight: 600; color: var(--flutter);
+  transition: color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s;
 }
-.project-links a:hover { gap: 9px; color: var(--flutter-2); }
-.project-links a::after { content: "→"; }
+.project-links a:hover { color: var(--flutter-2); }
+.project-links a::after { transition: transform 0.25s var(--ease); }
+.project-links a:hover::after { transform: translateX(4px); }
+.pl-src::after { content: "→"; }
+.pl-primary::after { content: "↗"; }
+.project-links .pl-primary { padding: 7px 14px; border-radius: 999px; color: #05121f; background: var(--grad); box-shadow: 0 10px 24px -16px rgba(66, 165, 245, 0.95); }
+.project-links .pl-primary:hover { color: #05121f; transform: translateY(-1px); box-shadow: 0 14px 28px -14px rgba(66, 165, 245, 1); }
+html[data-theme="light"] .project-links .pl-primary,
+html[data-theme="light"] .project-links .pl-primary:hover { color: #fff; }
 
 /* ---------- timeline ---------- */
 .timeline { position: relative; padding-left: 34px; }
@@ -570,6 +696,7 @@ html[data-theme="light"] .field input, html[data-theme="light"] .field textarea 
   .hero-visual { order: -1; min-height: 430px; }
   .about-grid { gap: 32px; }
   .chip-1 { left: 4%; } .chip-2 { right: 4%; } .chip-3 { right: 2%; }
+  .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 780px) {
@@ -591,6 +718,8 @@ html[data-theme="light"] .field input, html[data-theme="light"] .field textarea 
   .phone { width: 240px; }
   .float-chip { font-size: 0.74rem; padding: 6px 11px; }
   .projects-grid { grid-template-columns: 1fr; }
+  .projects-grid.filtered { grid-template-columns: 1fr; }
+  .project.wide { grid-column: auto; }
   .contact-form { padding: 22px 18px; }
   .timeline { padding-left: 26px; }
   .tl-dot { left: -25px; }

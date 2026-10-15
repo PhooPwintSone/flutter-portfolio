@@ -10,8 +10,11 @@ flutter-portfolio/
 ├── index.html          # all content & sections
 ├── styles.css          # theme variables live in :root
 ├── script.js           # reveal, counters, filters, typing, form, copy-email
-├── favicon.svg         # + favicon-32.png, apple-touch-icon.png, logo-128.jpg
 ├── resume.pdf          # linked from the hero
+├── images/
+│   ├── icons/          # favicon.svg, favicon-32.png, apple-touch-icon.png
+│   ├── logo/           # logo-128.jpg (nav mark) + logo.jpg, logo-alpha-64.png sources
+│   └── weather_app/    # screenshots shown on the Weather Watchlist card
 ├── AGENTS.md           # notes for AI agents and future you
 ├── test-chip-drag.js   # headless test for the hero chips: node test-chip-drag.js
 └── README.md
@@ -34,11 +37,55 @@ python -m http.server 8000
 | Name, title, socials | `index.html` — `<title>`, hero `<h1>`, `.social-row` |
 | Bio, stats, experience | `index.html` — `#about`, `.stats`, `#experience` |
 | Projects | `index.html` — `.project` cards. `data-cat="mobile\|web\|package"` drives the filters |
+| Project screenshots | `index.html` — the `.project-thumb` thumb. See "Project thumbnails" below |
 | Skill bars | `index.html` — `data-level="95"` on each `.meter` |
 | Contact details | `index.html` — `#contact` |
 | Copy-email button | `index.html` — the `.contact-email` card. `data-copy` on `.copy-btn` must match the `mailto:` address |
 | Colours, fonts, spacing | `styles.css` — `:root` custom properties |
 | Form submission | `script.js` — the `CONTACT_ENDPOINT` constant, section 10 |
+
+### Project thumbnails
+
+Four of the five cards preview **real app screenshots**. Add `is-shots` to the thumb and fill a
+`.thumb-shots` overlay:
+
+```html
+<div class="project-thumb is-shots t-5">
+  <div class="thumb-shots">
+    <img src="images/weather_app/weather_app_main_screen.png" alt="…" loading="lazy" decoding="async" />
+    <!-- 1, 2 or 3 shots; they scale to fit -->
+  </div>
+</div>
+```
+
+Keep the `.t-N` class — it becomes the dark tinted backdrop behind the shot, so pick one that suits
+the app. Put the files in `images/<app-name>/`. There are three layouts:
+
+- **Shelf** (default — Weather, Mari): shots sit bottom-flush, each takes an equal share and is
+  capped by the panel height, so even a very tall 0.47-ratio phone shot fits.
+- **`.is-mixed`** (Mini-Blog): two wide web shots stacked above two phone shots, for a card that is
+  both web and mobile. Shots go inside `.shot-row.is-wide` / `.shot-row.is-tall`.
+- **`.is-fan`** (Yomi): a tilting, overlapping deck of three. It only becomes a deck inside the
+  desktop split query where the panel is tall; elsewhere it falls back to the shelf.
+
+The fifth card, `curved_toggle_tabs`, has no app UI worth shooting, so it keeps a **coded HTML/CSS
+mockup** — a small scene inside `<div class="project-thumb t-4">` describing the package: a
+folder-style tab bar (`.mock.mock-tabs`) whose indicator morphs across the row on hover.
+
+### The bento grid
+
+The five cards are laid out as a bento grid rather than a uniform row: on desktop the grid is three
+columns and `Yomi Board` spans two of them (`.wide`) with its copy and visual side by side
+(`.split`). Tablet drops to two columns, mobile to one. One class drives all of it — add `.wide` to
+whichever card should span two columns.
+
+Filtering is handled by `script.js` §9, which adds `.filtered` to `#projectsGrid` whenever a
+category other than **All** is active. That switches the grid to a centred `auto-fit` layout so
+one or two surviving cards don't stretch across the page. Keep the `#projectsGrid` id and the
+`.filtered` toggle together — the bento span and the split only apply while `.filtered` is absent.
+
+Badges (`.p-badge`) and footer buttons (`.pl-primary` for a filled CTA, `.pl-src` for a text link
+with a sliding arrow) are plain markup inside each card — edit the text, or the `href`, in place.
 
 ### The contact form
 

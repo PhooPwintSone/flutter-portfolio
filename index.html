@@ -20,9 +20,14 @@
 
     <!-- SVG first: it reacts to prefers-color-scheme. The PNG is the fallback for
          browsers without SVG favicon support, so its dark plate is baked in. -->
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="icon" href="images/icons/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/icons/favicon-32.png"
+    />
+    <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -64,7 +69,7 @@
         <a href="#home" class="brand">
           <span class="brand-mark" aria-hidden="true">
             <img
-              src="logo-128.jpg"
+              src="images/logo/logo-128.jpg"
               alt=""
               width="38"
               height="38"
@@ -523,9 +528,31 @@
           </div>
 
           <div class="projects-grid" id="projectsGrid">
-            <article class="project reveal" data-cat="mobile">
-              <div class="project-thumb t-1">
-                <span class="thumb-glyph">🗂️</span>
+            <article class="project split wide reveal" data-cat="mobile">
+              <div class="project-thumb is-shots t-1">
+                <div class="thumb-shots is-fan">
+                  <img
+                    src="images/yomi board/Yomi Board Home Screen.png"
+                    alt="Yomi Board home screen listing task boards"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <img
+                    src="images/yomi board/Yomi Board Kan-Ban style task - darkTheme.png"
+                    alt="Yomi Board Kanban columns in the dark theme"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <img
+                    src="images/yomi board/Yomi Board Create task.png"
+                    alt="Creating a new task in Yomi Board"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="p-badges">
+                  <span class="p-badge">⚡ BLoC + Supabase</span>
+                </div>
               </div>
               <div class="project-body">
                 <div class="project-top"><h3>Yomi Board</h3></div>
@@ -542,6 +569,7 @@
                 </ul>
                 <div class="project-links">
                   <a
+                    class="pl-src"
                     href="https://github.com/PhooPwintSone/yomi-board"
                     target="_blank"
                     rel="noopener"
@@ -552,67 +580,24 @@
               </div>
             </article>
 
-            <article class="project reveal" data-delay="1" data-cat="mobile">
-              <div class="project-thumb t-2">
-                <span class="thumb-glyph">💅</span>
-              </div>
-              <div class="project-body">
-                <div class="project-top"><h3>Mari Customer App</h3></div>
-                <p>
-                  A consumer-facing nail salon booking application. Collaborated
-                  directly with designers to translate UI/UX mockups into a
-                  responsive mobile interface, utilizing Provider for state
-                  management and REST APIs for dynamic data.
-                </p>
-                <ul class="chips sm">
-                  <li>Flutter</li>
-                  <li>Provider</li>
-                  <li>REST APIs</li>
-                </ul>
-                <div class="project-links">
-                  <a
-                    href="https://github.com/PhooPwintSone/Mari_Customer_App"
-                    target="_blank"
-                    rel="noopener"
-                    aria-label="Mari Customer App source code"
-                    >Source</a
-                  >
-                </div>
-              </div>
-            </article>
-
-            <article class="project reveal" data-delay="2" data-cat="web">
-              <div class="project-thumb t-3">
-                <span class="thumb-glyph">📝</span>
-              </div>
-              <div class="project-body">
-                <div class="project-top"><h3>Cross-Platform Mini-Blog</h3></div>
-                <p>
-                  A responsive blogging platform optimized for both Web and
-                  Android. Includes complex UI features like pagination, image
-                  uploads, interactive reaction buttons, and seamless offline
-                  reading support.
-                </p>
-                <ul class="chips sm">
-                  <li>Flutter</li>
-                  <li>Hive</li>
-                  <li>Vercel</li>
-                </ul>
-                <div class="project-links">
-                  <a
-                    href="https://github.com/PhooPwintSone/mini_blog_app_web"
-                    target="_blank"
-                    rel="noopener"
-                    aria-label="Cross-Platform Mini-Blog source code"
-                    >Source</a
-                  >
-                </div>
-              </div>
-            </article>
-
-            <article class="project reveal" data-delay="3" data-cat="package">
+            <article class="project reveal" data-delay="1" data-cat="package">
               <div class="project-thumb t-4">
-                <span class="thumb-glyph">📦</span>
+                <div class="mock mock-tabs" aria-hidden="true">
+                  <div class="mt-rail">
+                    <i class="mt-ind"></i>
+                    <span class="mt-tab">Home</span>
+                    <span class="mt-tab">Stats</span>
+                    <span class="mt-tab">Profile</span>
+                  </div>
+                  <div class="mt-panel">
+                    <i class="ln l1"></i><i class="ln l2"></i
+                    ><i class="ln l3"></i>
+                  </div>
+                </div>
+                <div class="p-badges">
+                  <span class="p-badge">📦 Published on pub.dev</span>
+                  <span class="p-badge p-badge-2">0 Dependencies</span>
+                </div>
               </div>
               <div class="project-body">
                 <div class="project-top"><h3>curved_toggle_tabs</h3></div>
@@ -629,6 +614,7 @@
                 </ul>
                 <div class="project-links">
                   <a
+                    class="pl-primary"
                     href="https://pub.dev/packages/curved_toggle_tabs"
                     target="_blank"
                     rel="noopener"
@@ -636,6 +622,7 @@
                     >pub.dev</a
                   >
                   <a
+                    class="pl-src"
                     href="https://github.com/PhooPwintSone/curved_toggle_tabs"
                     target="_blank"
                     rel="noopener"
@@ -646,9 +633,153 @@
               </div>
             </article>
 
+            <article class="project reveal" data-delay="2" data-cat="web">
+              <div class="project-thumb is-shots t-3">
+                <div class="thumb-shots is-mixed">
+                  <div class="shot-row is-wide">
+                    <img
+                      src="images/Blog/Blog Feed.png"
+                      alt="Mini-Blog web feed layout"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <img
+                      src="images/Blog/Blog Side Bar.png"
+                      alt="Mini-Blog web layout with sidebar navigation"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="shot-row is-tall">
+                    <img
+                      src="images/Blog/Blog Login.png"
+                      alt="Mini-Blog mobile login screen"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <img
+                      src="images/Blog/Blog Sign up.png"
+                      alt="Mini-Blog mobile sign-up screen"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+                <div class="p-badges">
+                  <span class="p-badge">🌐 Web &amp; Android</span>
+                </div>
+              </div>
+              <div class="project-body">
+                <div class="project-top"><h3>Cross-Platform Mini-Blog</h3></div>
+                <p>
+                  A responsive blogging platform optimized for both Web and
+                  Android. Includes complex UI features like pagination, image
+                  uploads, interactive reaction buttons, and seamless offline
+                  reading support.
+                </p>
+                <ul class="chips sm">
+                  <li>Flutter</li>
+                  <li>Hive</li>
+                  <li>Vercel</li>
+                </ul>
+                <div class="project-links">
+                  <a
+                    class="pl-primary"
+                    href="https://miniblogweb.vercel.app"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Cross-Platform Mini-Blog live demo"
+                    >Live Demo</a
+                  >
+                  <a
+                    class="pl-src"
+                    href="https://github.com/PhooPwintSone/mini_blog_app_web"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Cross-Platform Mini-Blog source code"
+                    >Source</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="project reveal" data-delay="3" data-cat="mobile">
+              <div class="project-thumb is-shots t-2">
+                <div class="thumb-shots">
+                  <img
+                    src="images/mari's nail salon/Mari's nail salon splash screen.jpg"
+                    alt="Mari customer app splash screen"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <img
+                    src="images/mari's nail salon/Mari's nail salon login.jpg"
+                    alt="Mari customer app login screen"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <img
+                    src="images/mari's nail salon/Mari's nail salon signup.jpg"
+                    alt="Mari customer app sign-up screen"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="p-badges">
+                  <span class="p-badge">🎨 UI/UX to Production</span>
+                </div>
+              </div>
+              <div class="project-body">
+                <div class="project-top"><h3>Mari Customer App</h3></div>
+                <p>
+                  A consumer-facing nail salon booking application. Collaborated
+                  directly with designers to translate UI/UX mockups into a
+                  responsive mobile interface, utilizing Provider for state
+                  management and REST APIs for dynamic data.
+                </p>
+                <ul class="chips sm">
+                  <li>Flutter</li>
+                  <li>Provider</li>
+                  <li>REST APIs</li>
+                </ul>
+                <div class="project-links">
+                  <a
+                    class="pl-src"
+                    href="https://github.com/PhooPwintSone/Mari_Customer_App"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Mari Customer App source code"
+                    >Source</a
+                  >
+                </div>
+              </div>
+            </article>
+
             <article class="project reveal" data-delay="4" data-cat="mobile">
-              <div class="project-thumb t-5">
-                <span class="thumb-glyph">🌤️</span>
+              <div class="project-thumb is-shots t-5">
+                <div class="thumb-shots">
+                  <img
+                    src="images/weather_app/weather_app_main_screen.png"
+                    alt="Weather Watchlist home screen"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <img
+                    src="images/weather_app/weather_app_details.jpg"
+                    alt="Saved city weather details"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <img
+                    src="images/weather_app/weather_app_add_new_city.jpg"
+                    alt="Adding a new city"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="p-badges">
+                  <span class="p-badge">✅ 13 Unit Tests</span>
+                </div>
               </div>
               <div class="project-body">
                 <div class="project-top"><h3>Weather Watchlist</h3></div>
@@ -666,6 +797,7 @@
                 </ul>
                 <div class="project-links">
                   <a
+                    class="pl-src"
                     href="https://github.com/PhooPwintSone/weather_app"
                     target="_blank"
                     rel="noopener"
@@ -870,7 +1002,7 @@
                   placeholder=" "
                   required
                 />
-                <label for="email">Email address</label>
+                <label for="email">Your email address</label>
               </div>
               <div class="field">
                 <textarea

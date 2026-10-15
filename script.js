@@ -149,12 +149,17 @@
   /* ---------- 9. Project filters ---------- */
   const filterBtns = $$('.filter');
   const projects = $$('.project');
+  /* Bento grid: the flagship card spans two columns only while "All" is showing. Any
+     narrower filter drops the span and lets the survivors centre, so the grid carries a
+     .filtered class that mirrors the button state. */
+  const projectsGrid = $('#projectsGrid');
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       filterBtns.forEach((b) => { b.classList.remove('is-active'); b.setAttribute('aria-selected', 'false'); });
       btn.classList.add('is-active');
       btn.setAttribute('aria-selected', 'true');
       const f = btn.dataset.filter;
+      projectsGrid.classList.toggle('filtered', f !== 'all');
       projects.forEach((card) => {
         const show = f === 'all' || card.dataset.cat === f;
         card.classList.toggle('hide', !show);
